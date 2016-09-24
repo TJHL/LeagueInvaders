@@ -13,6 +13,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState=MENU_STATE;
+	RocketShip ship = new RocketShip(250,700,50,50);
 	Timer clock;
 	Font titleFont;
 	Font startFont;
@@ -32,11 +33,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void updateMenuState(){
-		
+	
 	}
 	
 	void updateGameState(){
-		
+		ship.update();
 	}
 	
 	void updateEndState(){
@@ -62,12 +63,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
+		ship.draw(g);
 
 	}
 	
 	void drawEndState(Graphics g){
 		g.setColor(Color.RED);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
+		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
+		g.setFont(titleFont);
+		g.setColor(Color.BLACK);
+		g.drawString("GAME OVER", 100, 100);
+		g.setFont(startFont);
+		g.setColor(Color.BLACK);
+		g.drawString("You killed "+"aliens.", 150, 300);
+		g.setFont(insructionFont);
+		g.setColor(Color.BLACK);
+		g.drawString("Press BACKSPACE to Restart", 90, 500);
 
 	}
 	
@@ -86,7 +97,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//currentState
+					currentState++;
 		if(currentState == MENU_STATE){
 			updateMenuState();
 		}
@@ -100,24 +111,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		repaint();
-//if(currentState > END_STATE){	currentState = MENU_STATE;}
+				if(currentState > END_STATE){	currentState = MENU_STATE;}
 	}
 	
-	public void keyTyped(KeyEvent e) {
-	}
-
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
 			currentState++;
 			}
-		
 		if(currentState > END_STATE){
 			currentState = MENU_STATE;
-
-		System.out.println("you pressed enter");
 		}
+		if(e.getKeyCode()==KeyEvent.VK_LEFT){
+
+		}
+		
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+			
+		}
+		
 	}
 	
 	public void keyReleased(KeyEvent e) {	
 	}
+
+	
+	public void keyTyped(KeyEvent e) {}
 }
