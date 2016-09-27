@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	int currentState=MENU_STATE;
 	RocketShip ship = new RocketShip(250,700,50,50);
+	ObjectManager manager = new ObjectManager();
 	Timer clock;
 	Font titleFont;
 	Font startFont;
@@ -24,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		titleFont= new Font("Arial", Font.PLAIN,48);
 		startFont= new Font("Arial", Font.PLAIN,24);
 		insructionFont= new Font("Arial", Font.PLAIN,24);
-		
+		manager.addObject(ship); 
 	}
 	
 	void startGame(){
@@ -37,7 +38,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void updateGameState(){
-		ship.update();
+	manager.update();
 	}
 	
 	void updateEndState(){
@@ -63,7 +64,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
-		ship.draw(g);
+		manager.draw(g);
 
 	}
 	
@@ -111,29 +112,45 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		repaint();
-				//if(currentState > END_STATE){	currentState = MENU_STATE;}
+		if(currentState > END_STATE){
+			currentState = MENU_STATE;
+		}
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
 			currentState++;
 			}
-		if(currentState > END_STATE){
-			currentState = MENU_STATE;
+		if(e.getKeyCode()==KeyEvent.VK_LEFT){	
+			ship.left=true;
 		}
-		if(e.getKeyCode()==KeyEvent.VK_LEFT){
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT){	
+		ship.right=true;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_UP){
+		ship.up=true;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_DOWN){
+		ship.down=true;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE){
+		manager.addObject(new Projectile(ship.x-5, ship.y, 10, 10));
+		manager.addObject(new Projectile(ship.x +45, ship.y, 10, 10));
 
 		}
-		
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode()==KeyEvent.VK_LEFT)
+		ship.left=false;
 		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-			
+		ship.right=false;
 		}
-		
-	}
-	
-	public void keyReleased(KeyEvent e) {	
-	}
-
-	
-	public void keyTyped(KeyEvent e) {}
+		if(e.getKeyCode()==KeyEvent.VK_UP){
+		ship.up=false;
+		}
+		if(e.getKeyCode()==KeyEvent.VK_DOWN){
+		ship.down=false;
+		}
+	}public void keyTyped(KeyEvent e) {}
 }

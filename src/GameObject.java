@@ -6,12 +6,16 @@ public class GameObject {
 	int y;
 	int width;
 	int height;
+	Boolean isAlive=true;
 	
 	void update(){
 	}
 	
 	void draw(Graphics g){
 	}
-	
-
+	Boolean isAlive(){
+		
+		return isAlive;
+		
+	}
 }
