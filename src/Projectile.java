@@ -4,6 +4,7 @@ import java.awt.Graphics;
 public class Projectile extends GameObject {
 int speed;
 	Projectile(int x,int y, int width, int height){
+		super();
 		 this.x=x;
 		 this.y=y;
 		 this.width=width;
@@ -11,6 +12,7 @@ int speed;
 		 speed=10;
 	}
 	void update(){
+		super.update();
 		y=y-speed;
 		if(y<=0){
 			isAlive=false;

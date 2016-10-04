@@ -8,6 +8,7 @@ public class LeagueInvaders {
 public static void main(String[] args) {
 	
 	LeagueInvaders a = new LeagueInvaders();
+	
 }
 	LeagueInvaders(){
 		 frame = new JFrame();

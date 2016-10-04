@@ -38,7 +38,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void updateGameState(){
-	manager.update();
+		manager.update();
+		manager.manageEnemies();
+		manager.checkCollision();
+		
+		if(ship.isAlive==false){
+		currentState=END_STATE;
+		ship.isAlive=true;
+		//PROBLEM RIGHT HERE!!!!!!!!!!!!!!!
+		manager.reset();
+		}
 	}
 	
 	void updateEndState(){
@@ -76,7 +85,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("GAME OVER", 100, 100);
 		g.setFont(startFont);
 		g.setColor(Color.BLACK);
-		g.drawString("You killed "+"aliens.", 150, 300);
+		g.drawString("You killed "+manager.getScore()+" aliens.", 150, 300);
 		g.setFont(insructionFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Press BACKSPACE to Restart", 90, 500);

@@ -8,6 +8,7 @@ public class RocketShip extends GameObject {
 	Boolean up=false;
 	Boolean down=false;
 	RocketShip(int x,int y, int width, int height){
+	super();
 	 this.x=x;
 	 this.y=y;
 	 this.width=width;
@@ -15,6 +16,7 @@ public class RocketShip extends GameObject {
 	 speed=5;
 	}
 	void update(){
+		super.update();
 		if(left==true){
 			x=x-speed;
 		}
