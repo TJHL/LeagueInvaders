@@ -77,11 +77,12 @@ public class ObjectManager {
 		return score;
 	}
 	
-	public void setScore(int s){
-		score = s;
+	public void resetScore( ){
+		score=0;
 	}
 	
 	public void reset(){
-		objects.clear();
+		//objects.clear();
+	
 	}
 }

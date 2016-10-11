@@ -17,16 +17,16 @@ public class RocketShip extends GameObject {
 	}
 	void update(){
 		super.update();
-		if(left==true){
+		if(left==true&&x>0){
 			x=x-speed;
 		}
-		if(right==true){
+		if(right==true&&x<450){
 			x=x+speed;
 		}
-		if(up==true){
+		if(up==true&&y>0){
 			y=y-speed;
 		}
-		if(down==true){
+		if(down==true&& y<726){
 			y=y+speed;
 		}
 	}

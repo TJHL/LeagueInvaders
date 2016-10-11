@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -14,11 +18,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	int currentState=MENU_STATE;
 	RocketShip ship = new RocketShip(250,700,50,50);
+	//RocketShip newLifeShip = new RocketShip(250,700,50,50);
 	ObjectManager manager = new ObjectManager();
 	Timer clock;
 	Font titleFont;
 	Font startFont;
 	Font insructionFont;
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JLabel text = new JLabel("Use arrow keys to move. Press SPACE to fire. Try not to die");
+	JButton button = new JButton("OK");
+	
 	
 	GamePanel(){
 		clock = new Timer(1000 / 60,this);
@@ -26,6 +36,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		startFont= new Font("Arial", Font.PLAIN,24);
 		insructionFont= new Font("Arial", Font.PLAIN,24);
 		manager.addObject(ship); 
+		frame.add(panel);
+		panel.add(text);
+		panel.add(button);
+		button.addActionListener(this);
+		frame.pack();
+		
 	}
 	
 	void startGame(){
@@ -45,8 +61,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if(ship.isAlive==false){
 		currentState=END_STATE;
 		ship.isAlive=true;
+		//ship=newLifeShip;
+		
 		//PROBLEM RIGHT HERE!!!!!!!!!!!!!!!
 		manager.reset();
+		
 		}
 	}
 	
@@ -55,6 +74,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawMenuState(Graphics g){
+		
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		g.setFont(titleFont);
@@ -65,16 +85,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Press ENTER to start", 125, 300);
 		g.setFont(insructionFont);
 		g.setColor(Color.YELLOW);
-		g.drawString("Press SPACE for intructions", 90, 400);
-		
-
+		g.drawString("Press SPACE for intructions", 90, 400);	
 	}
 	
 	void drawGameState(Graphics g){
+		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
 		manager.draw(g);
-
 	}
 	
 	void drawEndState(Graphics g){
@@ -89,7 +107,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(insructionFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Press BACKSPACE to Restart", 90, 500);
-
 	}
 	
 	public void paintComponent(Graphics g){
@@ -127,8 +144,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_ENTER){
-			currentState++;
+		if(e.getKeyCode()==KeyEvent.VK_ENTER&&currentState==MENU_STATE){
+			currentState=GAME_STATE;
 			}
 		if(e.getKeyCode()==KeyEvent.VK_LEFT){	
 			ship.left=true;
@@ -142,10 +159,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode()==KeyEvent.VK_DOWN){
 		ship.down=true;
 		}
-		if(e.getKeyCode()==KeyEvent.VK_SPACE){
+		if(e.getKeyCode()==KeyEvent.VK_SPACE&&currentState==GAME_STATE){
 		manager.addObject(new Projectile(ship.x-5, ship.y, 10, 10));
 		manager.addObject(new Projectile(ship.x +45, ship.y, 10, 10));
-
+		}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE&&currentState==MENU_STATE){
+			frame.setVisible(true);
+		}
+		if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE&&currentState==END_STATE){
+			manager.resetScore();
+			currentState=MENU_STATE;
 		}
 	}
 	
