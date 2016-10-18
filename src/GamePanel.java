@@ -18,7 +18,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	int currentState=MENU_STATE;
 	RocketShip ship = new RocketShip(250,700,50,50);
-	//RocketShip newLifeShip = new RocketShip(250,700,50,50);
 	ObjectManager manager = new ObjectManager();
 	Timer clock;
 	Font titleFont;
@@ -61,7 +60,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if(ship.isAlive==false){
 		currentState=END_STATE;
 		ship.isAlive=true;
-		//ship=newLifeShip;
+		ship = new RocketShip(250,700,50,50);
+		manager.addObject(ship);
 		
 		//PROBLEM RIGHT HERE!!!!!!!!!!!!!!!
 		manager.reset();
@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawGameState(Graphics g){
-		
+	//	g.drawImage(this.spaceImg, x, y, width, height, null);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
 		manager.draw(g);
@@ -124,7 +124,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-					//currentState++;
 		if(currentState == MENU_STATE){
 			updateMenuState();
 		}
@@ -140,6 +139,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		repaint();
 		if(currentState > END_STATE){
 			currentState = MENU_STATE;
+		}
+		if(e.getSource()==button){
+			frame.setVisible(false);
 		}
 	}
 	
@@ -160,8 +162,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		ship.down=true;
 		}
 		if(e.getKeyCode()==KeyEvent.VK_SPACE&&currentState==GAME_STATE){
-		manager.addObject(new Projectile(ship.x-5, ship.y, 10, 10));
-		manager.addObject(new Projectile(ship.x +45, ship.y, 10, 10));
+		manager.addObject(new Projectile(ship.x-5, ship.y+25, 10, 10));
+		manager.addObject(new Projectile(ship.x +45, ship.y+25, 10, 10));
 		}
 		if(e.getKeyCode()==KeyEvent.VK_SPACE&&currentState==MENU_STATE){
 			frame.setVisible(true);
