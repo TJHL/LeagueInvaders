@@ -13,7 +13,6 @@ public class GameObject {
 	int height;
 	Boolean isAlive=true;
 	Rectangle collisionBox; 
-	public static BufferedImage spaceImg;
 	public static BufferedImage alienImg;
 	public static BufferedImage rocketImg;
 	public static BufferedImage bulletImg;
@@ -24,7 +23,6 @@ public class GameObject {
 	collisionBox= new Rectangle(x,y,width, height);	
 	
 	try {
-		spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
 		alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
 		rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
 		bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));

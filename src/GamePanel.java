@@ -5,12 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int MENU_STATE = 0;
@@ -27,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	JPanel panel = new JPanel();
 	JLabel text = new JLabel("Use arrow keys to move. Press SPACE to fire. Try not to die");
 	JButton button = new JButton("OK");
-	
+	public static BufferedImage spaceImg;
 	
 	GamePanel(){
 		clock = new Timer(1000 / 60,this);
@@ -40,6 +44,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		panel.add(button);
 		button.addActionListener(this);
 		frame.pack();
+		try {
+			spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+
 		
 	}
 	
@@ -57,14 +68,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		manager.manageEnemies();
 		manager.checkCollision();
 		
-		if(ship.isAlive==false){
-		currentState=END_STATE;
-		ship.isAlive=true;
-		ship = new RocketShip(250,700,50,50);
-		manager.addObject(ship);
-		
-		//PROBLEM RIGHT HERE!!!!!!!!!!!!!!!
-		manager.reset();
+		if (!ship.isAlive) {
+			currentState = END_STATE;
+			manager.reset();
+			ship = new RocketShip(250,700,50,50);
+			manager.addObject(ship);
 		
 		}
 	}
@@ -89,9 +97,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawGameState(Graphics g){
-	//	g.drawImage(this.spaceImg, x, y, width, height, null);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
+		g.drawImage(this.spaceImg, 0, 0, 500, 800, null);
 		manager.draw(g);
 	}
 	
