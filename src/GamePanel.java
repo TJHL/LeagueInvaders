@@ -50,7 +50,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			
 			e.printStackTrace();
 		}
-
 		
 	}
 	
@@ -59,9 +58,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 	}
 	
-	void updateMenuState(){
+	//void updateMenuState(){
 	
-	}
+	//}
 	
 	void updateGameState(){
 		manager.update();
@@ -77,9 +76,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 	
-	void updateEndState(){
+	//void updateEndState(){
 		
-	}
+	//}
 	
 	void drawMenuState(Graphics g){
 		
@@ -131,7 +130,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if(currentState == MENU_STATE){
-			updateMenuState();
+			//updateMenuState();
 		}
 		
 		else if(currentState == GAME_STATE){
@@ -139,7 +138,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		else if(currentState == END_STATE){
-			updateEndState();
+			//updateEndState();
 		}
 		
 		repaint();
